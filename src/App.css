@@ -1,0 +1,10 @@
+div{
+  font-family: 'Poppins', sans-serif;
+}
+.background{
+  background-image: url("./Components/Images/bench-accounting-nvzvOPQW0gc-unsplash.jpg");
+  width: 100%;
+  height: 650px;
+  background-repeat: no-repeat;
+  background-size:contain;
+}
