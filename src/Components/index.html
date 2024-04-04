@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Voting Page</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+        height: 300px;
+        background-image: url("https://media.istockphoto.com/id/1143716890/photo/indian-voter-hand-with-voting-sign.jpg?s=612x612&w=0&k=20&c=nkn_G3fhmMH7PJBJajeMRBT_U0aDQUe9xw1R5hT5n7Y="); /* Replace 'your-image-url.jpg' with the URL of your background image */
+        background-size: cover;
+        background-position: center;
+      }
+
+      .navbar {
+        background-color: #34086d;
+        color: #fff;
+        padding: 10px 20px;
+        text-align: center;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 20px auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around; /* Changed to space-around for better spacing */
+      }
+      .party {
+        width: calc(50% - 20px);
+        margin-bottom: 40px;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .party:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      .party img {
+        display: block;
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 15px;
+        /* border-radius: 50%; */
+        border-radius: 8px 8px 0 0;
+      }
+
+      .party h2 {
+        margin: 0 0 10px;
+        font-size: 20px;
+        text-align: center;
+        color: black;
+      }
+
+      .party p {
+        margin: 0;
+        font-size: 14px;
+        text-align: center;
+        color: #666666;
+      }
+
+      .vote-btn {
+        display: block;
+        width: 100%;
+        height: 50px;
+        padding: 10px;
+        margin: 10px;
+        font-size: 25px;
+        background-color: whitesmoke;
+        color: black;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .vote-btn:hover {
+        background-color: #34086d;
+        color: whitesmoke;
+      }
+      .party-title {
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #374151; /* Dark gray text color */
+      }
+
+      .party-description {
+        margin-bottom: 0;
+        font-size: 1rem;
+        color: #6b7280; /* Gray text color */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <h1>Voting Page</h1>
+    </div>
+
+    <div class="container">
+      <div class="party">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Bharatiya_Janata_Party_logo.svg/800px-Bharatiya_Janata_Party_logo.svg.png"
+          alt="Party 1"
+        />
+        <h2 class="party-title">Bharatiya Janata Party (BJP)</h2>
+        <p class="party-description">
+          Bharatiya Janata Party – Country’s largest political party in terms of
+          representation in the national parliament and state assemblies, and it
+          is the world’s largest party in terms of primary membership. It was
+          founded in the year 1980, April 6th and is led by Mr. Narendra Modi
+        </p>
+        <button class="vote-btn">Vote Now</button>
+      </div>
+
+      <div class="party">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Indian_National_Congress_hand_logo.svg/225px-Indian_National_Congress_hand_logo.svg.png"
+          alt="Party 2"
+        />
+        <h2>Congress</h2>
+        <p>
+          Congress’ social policy is based on the Gandhian principle of
+          Sarvodaya. Lifting up of all sections of society for improvement of
+          the lives of economically underprivileged and socially marginalized
+          people. The most praised symbol of a right hand, the palm facing front
+          and fingers pressed together with Indian tricolor background signifies
+          strength, energy and unity.
+        </p>
+        <button class="vote-btn">Vote Now</button>
+      </div>
+
+      <div class="party">
+        <img
+          src="https://www.livelaw.in/h-upload/images/750x450_aap.jpg"
+          alt="Party 3"
+        />
+        <h2>Aam Aadmi Party</h2>
+        <p>
+          Aam Aadmi Party (AAP) was founded in the year 2012; November 26th By
+          Mr.Arvind Kejriwal & others.It is currently the ruling party of
+          National Capital Territory of Delhi.
+        </p>
+        <button class="vote-btn">Vote Now</button>
+      </div>
+
+      <div class="party">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/All_India_Majlis-e-Ittehadul_Muslimeen_logo.svg/270px-All_India_Majlis-e-Ittehadul_Muslimeen_logo.svg.png"
+          alt="Party 4"
+        />
+        <h2>MIM</h2>
+        <p>
+          Who is the leader of MIM party? Asaduddin Salahuddin Owaisi (born 13
+          May 1969) is an Indian politician, who is the President of the All
+          India Majlis-e-Ittehadul Muslimeen (AIMIM). He is a 4 time Member of
+          Parliament representing the Hyderabad constituency in Lok Sabha, the
+          lower house of the Indian Parliament..
+        </p>
+        <button class="vote-btn">Vote Now</button>
+      </div>
+
+      <div class="party">
+        <img
+          src="https://www.designerpeople.com/wp-content/uploads/2018/08/Free-Vector-EPS-Logo-Download-NCP.jpg"
+          alt="Party 5"
+        />
+        <h2>Party 5</h2>
+        <p>Description of Party 5.</p>
+        <button class="vote-btn">Vote Now</button>
+      </div>
+    </div>
+  </body>
+</html>
