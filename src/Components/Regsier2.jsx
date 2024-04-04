@@ -1,7 +1,5 @@
-/// <reference lib="dom" />
 import React, { useState } from "react";
 import axios from "axios";
-
 const Register2 = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,6 +10,9 @@ const Register2 = () => {
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
+  };
+  const handleSendOTP = (event) => {
+    setOtp(event.target.value);
   };
 
   const handlePasswordChange = (event) => {
@@ -38,12 +39,12 @@ const Register2 = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.post("YOUR_BACKEND_ENDPOINT", {
+      const response = await axios.post("http://localhost:3000/Voteuser", {
         email,
         password,
         phoneNumber,
         aadhaarNumber,
-        // Make sure to include the image URL if needed
+        imageurl: "imag1",
         otp,
       });
 

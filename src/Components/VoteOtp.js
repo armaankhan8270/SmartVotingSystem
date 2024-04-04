@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import firebase from "firebase/compat/app"; // Import the app module
 import "firebase/compat/auth"; // Import the auth module
-import "firebase/compat/firestore"; //
 
 const VoteOtp = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -78,6 +77,7 @@ const VoteOtp = () => {
       </button>
 
       {error && <p className="text-red-600 mt-4">{error}</p>}
+      <div id="recaptcha-container"></div>
     </div>
   );
 };

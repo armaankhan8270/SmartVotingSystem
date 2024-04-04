@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import firebase from "firebase/compat/app"; // Import Firebase app
 import "firebase/compat/auth"; // Import Firebase authentication module
-import { RecaptchaVerifier, getAuth } from "firebase/auth"; // Import RecaptchaVerifier and getAuth from Firebase authentication
+import { getAuth, RecaptchaVerifier } from "firebase/auth"; // Import RecaptchaVerifier and getAuth from Firebase authentication
 import VoteOtp from "./Components/VoteOtp";
 
 const firebaseConfig = {
@@ -22,12 +22,21 @@ if (!firebase.apps.length) {
 function App() {
   const recaptchaRef = useRef(null); // Reference for the reCAPTCHA container
   const [firebaseInitialized, setFirebaseInitialized] = useState(false); // Track initialization state of Firebase
+  let recaptchaVerifier = null; // Declare recaptchaVerifier variable
 
   useEffect(() => {
     const initializeFirebase = async () => {
-      // Wait for Firebase to be ready (optional, can be removed if initialization is synchronous)
-      await firebase.auth().onAuthStateChanged();
-      setFirebaseInitialized(true); // Set firebaseInitialized state to true after Firebase initialization
+      try {
+        await new Promise((resolve, reject) => {
+          const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+            unsubscribe();
+            resolve(user);
+          }, reject);
+        });
+        setFirebaseInitialized(true); // Set firebaseInitialized state to true after Firebase initialization
+      } catch (error) {
+        console.error("Firebase initialization error:", error);
+      }
     };
 
     initializeFirebase(); // Call initializeFirebase function
@@ -41,10 +50,8 @@ function App() {
     };
   }, []);
 
-  let recaptchaVerifier; // Declare recaptchaVerifier variable
-
-  if (firebaseInitialized) {
-    const auth = getAuth(firebase); // Get authentication instance using getAuth
+  if (firebaseInitialized && recaptchaRef.current) {
+    const auth = getAuth(); // Get authentication instance using getAuth
     recaptchaVerifier = new RecaptchaVerifier(recaptchaRef.current, {
       // Create a new RecaptchaVerifier instance
       size: "invisible", // Set reCAPTCHA size to invisible
