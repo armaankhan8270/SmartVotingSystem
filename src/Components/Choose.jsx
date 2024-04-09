@@ -25,7 +25,7 @@ const Choose = () => {
 
           <div className="max-w-2xl mx-auto mt-8 sm:mt-16 flex justify-between">
             <div
-              onClick={() => handleSubmit("/create")}
+              onClick={() => handleSubmit("/sign")}
               className="overflow-hidden h-44 w-72 transition-all hover:border-blue-600 duration-200 bg-white border-2 border-gray-200 rounded-md hover:bg-gray-50 cursor-pointer flex items-center"
             >
               <img
@@ -42,7 +42,7 @@ const Choose = () => {
             </div>
 
             <div
-              onClick={() => handleSubmit("/login")}
+              onClick={() => handleSubmit("/verify")}
               className="overflow-hidden transition-all h-44 w-72 duration-200 bg-white border-2 hover:border-blue-600 rounded-md hover:bg-gray-50 cursor-pointer flex items-center"
             >
               <img
@@ -64,7 +64,7 @@ const Choose = () => {
           </div>
 
           <button
-            onClick={() => handleSubmit("/login")}
+            onClick={() => handleSubmit("/verify")}
             title=""
             className="inline-flex items-center justify-center w-full px-12 py-4 mt-6 font-semibold text-white transition-all duration-200 rounded-md bg-gradient-to-r from-fuchsia-600 to-blue-600 hover:opacity-80 focus:opacity-80"
             role="button"

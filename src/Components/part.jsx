@@ -1,4 +1,8 @@
 import React from "react";
+import firebase from "firebase/compat/app";
+import "firebase/compat/firestore";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "./Context";
 
 const Party = () => {
   // Sample data for testing
@@ -6,6 +10,7 @@ const Party = () => {
     {
       name: "Bharatiya Janata Party (BJP)",
       leader: "Narendra Modi",
+      shortname: "BJP",
       foundingDate: "April 6, 1980",
       ideologies:
         "Hindutva, Integral humanism, Nationalism, Social conservatism",
@@ -17,6 +22,7 @@ const Party = () => {
     },
     {
       name: "Indian National Congress",
+      shortname: "Congress",
       leader: "Sonia Gandhi",
       foundingDate: "December 28, 1885",
       ideologies: "Secularism, Social democracy, Gandhian socialism",
@@ -29,6 +35,7 @@ const Party = () => {
     {
       name: "Aam Aadmi Party (AAP)",
       leader: "Arvind Kejriwal",
+      shortname: "AAP",
       foundingDate: "November 26, 2012",
       ideologies: "Anti-corruption, Decentralization, Populism",
       keyLeaders: ["Arvind Kejriwal", "Manish Sisodia"],
@@ -38,6 +45,7 @@ const Party = () => {
     },
     {
       name: "All India Majlis-e-Ittehad-ul-Muslimeen (AIMIM)",
+      shortname: "AIMIM",
       leader: "Asaduddin Owaisi",
       foundingDate: "1927",
       ideologies: "Muslim Minority Interests, Social Justice, Secularism",
@@ -49,6 +57,7 @@ const Party = () => {
     },
     {
       name: "Nationalist Congress Party (NCP)",
+      shortname: "NCP",
       leader: "Sharad Pawar",
       foundingDate: "May 25, 1999",
       ideologies: "Federalism, Secularism, Social Democracy",
@@ -60,6 +69,74 @@ const Party = () => {
     },
     // Add more parties here
   ];
+  // Access user data from context
+  const { user, updateUser } = useUser();
+  const history = useNavigate();
+
+  const voteForParty = async (partyName) => {
+    const db = firebase.firestore();
+    const partyRef = db.collection("vote").doc(partyName);
+
+    try {
+      // Check if the user has already voted
+      if (user.isVoted) {
+        console.log("User has already voted.");
+        alert("You have already voted.");
+        return;
+      }
+
+      // Use transaction to ensure atomicity of vote increment
+      await db.runTransaction(async (transaction) => {
+        const partyDoc = await transaction.get(partyRef);
+        if (partyDoc.exists) {
+          const currentVotes = partyDoc.data().votes || 0;
+          transaction.update(partyRef, { votes: currentVotes + 1 });
+          console.log(`${partyName} vote incremented successfully.`);
+          alert(`${partyName} vote incremented successfully.`);
+
+          // Update user's information in Firestore
+          await updateUserVotedStatus(user.aadhaarNumber);
+        } else {
+          console.log(`${partyName} does not exist in the vote collection.`);
+        }
+      });
+    } catch (error) {
+      console.error("Error voting for party:", error);
+    }
+  };
+
+  // Function to update user's voted status in Firestore
+  const updateUserVotedStatus = async (aadhaarNumber) => {
+    try {
+      const db = firebase.firestore();
+
+      // Query to find the user document with the given Aadhaar number
+      const userSnapshot = await db
+        .collection("users")
+        .where("aadhaarNumber", "==", aadhaarNumber)
+        .get();
+
+      if (!userSnapshot.empty) {
+        // If user found, update the first user document in the snapshot
+        const userRef = userSnapshot.docs[0].ref;
+
+        // Update the isVoted field to true
+        await userRef.update({ isVoted: true });
+        console.log("User's voted status updated successfully.");
+        alert("User's voted status updated successfully.");
+
+        // Optionally, you can call updateUser if needed
+        updateUser(userRef);
+
+        // Redirect to the thanks page
+        history("/thanks");
+      } else {
+        console.log("User not found with Aadhaar number:", aadhaarNumber);
+      }
+    } catch (error) {
+      console.error("Error updating user's voted status:", error);
+    }
+  };
 
   return (
     <div className="h-full p-4 dark:bg-gray-700 bg-gray-200 pt-12">
@@ -71,7 +148,7 @@ const Party = () => {
           >
             <div className="p-4">
               <img
-                className="w-72 m-8 mr-20  h-48 sm:w-32 sm:h-32 object-cover rounded-xl mb-4"
+                className="w-72 m-8 mr-20 h-48 sm:w-32 sm:h-32 object-cover rounded-xl mb-4"
                 src={party.image}
                 alt={party.name}
               />
@@ -98,7 +175,10 @@ const Party = () => {
               <p className="text-xs text-gray-500 dark:text-gray-500">
                 National Party
               </p>
-              <button className="mt-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+              <button
+                className="mt-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300"
+                onClick={() => voteForParty(party.shortname)}
+              >
                 Vote
               </button>
             </div>

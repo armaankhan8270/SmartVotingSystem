@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import firebase from "firebase/compat/app"; // Import Firebase app
 import "firebase/compat/auth"; // Import Firebase authentication module
 import { getAuth, RecaptchaVerifier } from "firebase/auth"; // Import RecaptchaVerifier and getAuth from Firebase authentication
-import VoteOtp from "./Components/VoteOtp";
+import VoteOtp1 from "./Components/Verify";
+import HeroSection from "./Components/Home";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDa-VbWoYUmbQRmweM9nJJuc47zr4TGR_8",
@@ -65,14 +66,9 @@ function App() {
 
   return (
     <div>
-      <div className="h-10"></div>
-      {firebaseInitialized && ( // Render only after Firebase is initialized
-        <>
-          {/* Render the reCAPTCHA container */}
-          <div ref={recaptchaRef}></div>
-        </>
-      )}
-      <VoteOtp />
+      <div className="h-10">
+        <HeroSection />
+      </div>
     </div>
   );
 }

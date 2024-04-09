@@ -2,15 +2,15 @@ import React from "react";
 import ov from "./Images/armaan1.jpeg";
 const About = () => {
   return (
-    <div className=" shadow-lg mt-3  m bg-[#ffffff] h-[800px]">
+    <div className=" shadow-lg bg-slate-100 h-[800px]">
       <h1 className="text-4xl text-center pt-4 font-bold text-pule-600">
         👤 About <span className="text-purple-600">Me</span>
       </h1>
-      <div className="flex ">
+      <div className="flex  ">
         <div className="w-1/2 rounde shadw-l p-24  b h-[700px] ">
           <img className="h-full rounded-full w-full" src={ov} alt="" />
         </div>
-        <div className="w-1/2 shadowg  h-[700px] ">
+        <div className="w-1/2 shadow-md  h-[700px] ">
           <h1 className="text-3xl text-slate-800 ml-4 mt-32 font-bold">
             Im Armaan Khan
           </h1>

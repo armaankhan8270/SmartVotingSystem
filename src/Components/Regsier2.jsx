@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
+
 const Register2 = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [aadhaarNumber, setAadhaarNumber] = useState("");
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(""); // State to store selected image file
   const [otp, setOtp] = useState("");
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
-  };
-  const handleSendOTP = (event) => {
-    setOtp(event.target.value);
   };
 
   const handlePasswordChange = (event) => {
@@ -28,7 +26,7 @@ const Register2 = () => {
   };
 
   const handleImageChange = (event) => {
-    setSelectedImage(event.target.files[0]);
+    setSelectedImage(event.target.files[0]); // Store the selected image file in state
   };
 
   const handleOtpChange = (event) => {
@@ -39,14 +37,23 @@ const Register2 = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3000/Voteuser", {
-        email,
-        password,
-        phoneNumber,
-        aadhaarNumber,
-        imageurl: "imag1",
-        otp,
-      });
+      const formData = new FormData(); // Create FormData object
+      formData.append("email", email);
+      formData.append("password", password);
+      formData.append("phoneNumber", phoneNumber);
+      formData.append("aadhaarNumber", aadhaarNumber);
+      // formData.append("profileImage", selectedImage); // Append the selected image file to FormData
+
+      const response = await axios.post(
+        "http://localhost:3001/Voteuser/create",
+        {
+          email,
+          password,
+          phoneNumber,
+          aadhaarNumber,
+          peofileImage: selectedImage,
+        }
+      );
 
       console.log("User registered successfully:", response.data);
       // Handle success (redirect, show success message, etc.)
@@ -55,7 +62,6 @@ const Register2 = () => {
       // Handle error (show error message, etc.)
     }
   };
-
   return (
     <div>
       <section className="py-10 bg-gray-50 sm:py-16 lg:py-24">
@@ -142,7 +148,7 @@ const Register2 = () => {
                       </div>
                       <button
                         type="button"
-                        onClick={handleSendOTP}
+                        // onClick={handleSendOTP}
                         className="inline-block mt-2 text-sm text-blue-600 underline focus:outline-none"
                       >
                         Send OTP
@@ -227,7 +233,7 @@ const Register2 = () => {
                             type="text"
                             id="otp"
                             value={otp}
-                            onChange={handleOtpChange}
+                            // onChange={handleOtpChange}
                             placeholder="Enter OTP"
                             className="block w-full py-4 pl-3 pr-10 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600"
                           />
@@ -235,7 +241,7 @@ const Register2 = () => {
                         <div className="w-1/3">
                           <button
                             type="button"
-                            onClick={handleSendOTP}
+                            // onClick={handleSendOTP}
                             className="w-full px-2 py-3 mt-4 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700"
                           >
                             Send OTP
