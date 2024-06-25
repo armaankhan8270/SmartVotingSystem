@@ -3,6 +3,8 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "./Context";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Party = () => {
   // Sample data for testing
@@ -81,7 +83,17 @@ const Party = () => {
       // Check if the user has already voted
       if (user.isVoted) {
         console.log("User has already voted.");
-        alert("You have already voted.");
+        toast.error(`Already Voted`, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          // onClose: () => navigate("/party")
+        });
+        // alert("You have already voted.");
         return;
       }
 
@@ -92,7 +104,14 @@ const Party = () => {
           const currentVotes = partyDoc.data().votes || 0;
           transaction.update(partyRef, { votes: currentVotes + 1 });
           console.log(`${partyName} vote incremented successfully.`);
-          alert(`${partyName} vote incremented successfully.`);
+          toast.success(
+            `${partyName} vote incremented successfully.of the user ${user.email}`,
+            {
+              autoClose: 2000, // Close the notification after 2 seconds
+              position: "top-right", // Show notification at the top-right corner
+            }
+          );
+          // alert(`${partyName} vote incremented successfully.`);
 
           // Update user's information in Firestore
           await updateUserVotedStatus(user.aadhaarNumber);
@@ -122,14 +141,46 @@ const Party = () => {
 
         // Update the isVoted field to true
         await userRef.update({ isVoted: true });
+        toast.success(
+          ` ${user.email} your Vote Is SuccessFully Added to Database `,
+          {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            // onClose: () => navigate("/party")
+          }
+        );
         console.log("User's voted status updated successfully.");
-        alert("User's voted status updated successfully.");
+        // toast.success(
+        //   `User's${user.aadhaarNumber} voted status updated successfully.`,
+        //   {
+        //     autoClose: 2000,
+        //     position: "top-right",
+        //   }
+        // );
+        toast.success(
+          `User's${user.aadhaarNumber} voted status updated successfully.`,
+          {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            onClose: () => history("/thanks"),
+          }
+        );
+        // alert("User's voted status updated successfully.");
 
         // Optionally, you can call updateUser if needed
         updateUser(userRef);
 
         // Redirect to the thanks page
-        history("/thanks");
       } else {
         console.log("User not found with Aadhaar number:", aadhaarNumber);
       }
@@ -140,6 +191,7 @@ const Party = () => {
 
   return (
     <div className="h-full p-4 dark:bg-gray-700 bg-gray-200 pt-12">
+      <ToastContainer />
       <div className="max-w-4xl mx-auto">
         {parties.map((party, index) => (
           <div

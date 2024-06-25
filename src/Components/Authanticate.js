@@ -4,6 +4,8 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 // import VoteOtp from "./Verify.js";
 import { useUser } from "./Context";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import VoteOtp1 from "./Verify";
 const Authenticate = () => {
   const [aadhaarNumber, setAadhaarNumber] = useState("");
@@ -50,10 +52,29 @@ const Authenticate = () => {
       await firebase.auth().signInWithCredential(credential);
       console.log("User authenticated successfully");
       setShowAlert(true);
+      toast.success("Verified SuccessFully", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        // onClose: () => navigate("/party"),
+      });
       alert("verified successfully");
       // Navigate to party page after OTP verification
-      navigate("/party");
+      // navigate("/party");
     } catch (error) {
+      toast.error(`"Error searching for user:", ${error.message}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       setError(error.message);
       alert("wrong otp");
     }
@@ -69,17 +90,69 @@ const Authenticate = () => {
         .collection("users")
         .where("aadhaarNumber", "==", aadhaarNumber)
         .get();
-      alert("Aadahr Number is valid");
+      // toast.success(
+      //   `AsslamuAlikum ${user.email} your aadhar number is verifed SuccessFully`,
+      //   {
+      //     position: "top-right",
+      //     autoClose: 3000,
+      //     hideProgressBar: true,
+      //     closeOnClick: true,
+      //     pauseOnHover: true,
+      //     draggable: true,
+      //     progress: undefined,
+      //     // onClose: () => navigate("/party")
+      //   }
+      // );
+      // alert("Aadahr Number is valid");
       const userData1 = userSnapshot.docs[0].data();
+      toast.success(
+        `AsslamuAlikum ${userData1.email} your aadhar number is verifed SuccessFully`,
+        {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          // onClose: () => navigate("/party")
+        }
+      );
       updateUser(userData1);
-      alert(userData1.phoneNumber);
+      setTimeout(() => {
+        toast.success(`And You Registerd Number is ${userData1.phoneNumber} `, {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          // onClose: () => navigate("/party"),
+        });
+      }, 1000);
+      // alert(userData1.phoneNumber);
 
       if (!userSnapshot.empty) {
         // If user found, get user's phone number
         const phoneNumber = "+91" + userData1.phoneNumber;
         setPhoneNumber(phoneNumber);
-        alert(phoneNumber);
-        setShowAlert(true);
+        setTimeout(() => {
+          toast.success(
+            `Now Yoy get Otp On Your Registerd Phone NUmber ${phoneNumber} `,
+            {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              onClose: () => setShowAlert(true),
+            }
+          );
+        }, 2000);
+        // alert(phoneNumber);
 
         // Send OTP to user's phone number
         // await handleSendOTP();
@@ -87,6 +160,15 @@ const Authenticate = () => {
         console.log("User not found with Aadhaar number:", aadhaarNumber);
       }
     } catch (error) {
+      toast.error(`"Error searching for user:", ${error}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       console.error("Error searching for user:", error);
       alert(error.message);
     }
@@ -119,13 +201,14 @@ const Authenticate = () => {
         <VoteOtp1 phoneNumber={phoneNumber} />
       ) : (
         <section className="py-10 bg-gray-50 sm:py-16 lg:py-24">
+          <ToastContainer />
           <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div className="max-w-2xl mx-auto text-center">
-              <h2 className="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl">
-                Enter The Voter Details Authenticate Page
-              </h2>
+              <p className="text-sm  font-bold leading-tight text-black sm:text-4xl lg:text-2xl first-letter:text-blue-900 first-letter:text-5xl">
+                Enter The Voter AadhaarCard Number To Verify
+              </p>
               <p className="max-w-xl mx-auto mt-4 text-base leading-relaxed text-gray-600">
-                After The Details Verify OTP
+                After Verification We Send Otp To Number That Linked With Aadahr
               </p>
             </div>
 
@@ -169,7 +252,7 @@ const Authenticate = () => {
                           />
                         </div>
                       </div>
-
+                      {/* 
                       <div className="flex flex-row items-center space-x-4">
                         <div className="w-3/4">
                           <label
@@ -196,7 +279,7 @@ const Authenticate = () => {
                             Verify OTP
                           </button>
                         </div>
-                      </div>
+                      </div> */}
 
                       <div>
                         <button

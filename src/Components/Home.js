@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   const sectionData = [
@@ -70,9 +71,12 @@ const HeroSection = () => {
               <p className="text-lg sm:text-xl lg:text-lg text-gray-700 mb-8">
                 {data.text}
               </p>
-              <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline">
-                Vote Now
-              </button>
+              <Link to={"/admin"}>
+                {" "}
+                <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline">
+                  Vote Now
+                </button>
+              </Link>
             </div>
           </div>
         </div>

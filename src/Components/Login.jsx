@@ -7,7 +7,7 @@ import VoteOtp from "./VoteOtp(optional)";
 const Login = () => {
   const [aadhaarNumber, setAadhaarNumber] = useState("");
   const [otp, setOtp] = useState("");
-  const [showAlert, setShowAlert] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false); // State to show confirmation
   const navigate = useNavigate();
 
   const handleAadhaarNumberChange = (event) => {
@@ -41,14 +41,19 @@ const Login = () => {
             new firebase.auth.RecaptchaVerifier("recaptcha-container")
           )
           .then((confirmationResult) => {
-            window.confirmationResult = confirmationResult;
+            // window.confirmationResult = confirmationResult;
           })
           .catch((error) => {
             console.error("Error sending OTP:", error);
           });
 
+        // Show confirmation message
+        setShowConfirmation(true);
+
         // Navigate to party page after OTP verification
-        navigate("/party");
+        setTimeout(() => {
+          navigate("/party");
+        }, 2000);
       } else {
         console.log("User not found with Aadhaar number:", aadhaarNumber);
       }
@@ -59,27 +64,9 @@ const Login = () => {
 
   return (
     <div>
-      {showAlert && (
-        <div
-          role="alert"
-          className="alert justify-center text-center mx-25 alert-success bg-green-800"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="stroke-current shrink-0 h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <span className="text-white text-3xl">
-            Your Verification Is Successful
-          </span>
+      {showConfirmation && ( // Show confirmation message if showConfirmation is true
+        <div className="bg-green-500 py-2 text-center text-white font-semibold">
+          Verification successful!
         </div>
       )}
       <section className="py-10 bg-gray-50 sm:py-16 lg:py-24">
@@ -160,7 +147,7 @@ const Login = () => {
                         </button>
                       </div>
                     </div>
-                    <VoteOtp />
+                    {/* <VoteOtp /> */}
                     <div>
                       <div className="flex items-center justify-between">
                         <label

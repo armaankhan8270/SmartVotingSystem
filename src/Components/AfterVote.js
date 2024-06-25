@@ -16,12 +16,12 @@ function ThankYouForVoting() {
           <button className="py-3 px-6 text-lg font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition duration-300">
             Vote Again
           </button>
-          <a
-            href="#"
+          <Link
+            to="/home"
             className="py-3 px-6 text-lg font-semibold text-blue-500 rounded-lg hover:text-blue-600 transition duration-300 border border-blue-500 hover:border-blue-600"
           >
             View Results
-          </a>
+          </Link>
         </div>
         <p className="text-base text-gray-600 dark:text-gray-400">
           Didn't get a chance to vote?{" "}

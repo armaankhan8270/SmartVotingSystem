@@ -20,6 +20,8 @@ import VoteCountPage from "./Components/Votecount";
 import About from "./Components/About";
 import Contact from "./Components/Contact";
 import Help from "./Components/Help";
+import Face from "./Components/Face";
+import ImageComparison from "./armaa";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -30,7 +32,7 @@ root.render(
         <Route path="/" element={<App />} />
         <Route path="/login" element={<Login />} />
         <Route path="/siginup" element={<Signup />} />
-        <Route path="/Home" element={<HeroSection />} />
+        <Route path="/Home" element={<VoteCountPage />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/select" element={<Choose />} />
         <Route path="/sign" element={<SignUpForm />} />
@@ -44,6 +46,7 @@ root.render(
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/help" element={<Help />} />
+        <Route path="/img" element={<ImageComparison />} />
         {/* <Route
         path="/check"
         element={<VoteOtp phoneNumber={"+918433639534"} />}

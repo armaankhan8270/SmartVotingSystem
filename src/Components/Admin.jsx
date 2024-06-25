@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore"; // Import Firestore
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Admin = () => {
   const [email, setEmail] = useState("");
@@ -17,11 +19,19 @@ const Admin = () => {
       await firebase.auth().signInWithEmailAndPassword(email, password);
 
       // If sign-in is successful, navigate to "/select" page
-      alert("Login Successfully");
-      navigate("/select");
+      toast.success("Login Successful!", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        onClose: () => navigate("/select"),
+      });
     } catch (error) {
       console.error("Error signing in:", error);
-      alert(error.message);
+      toast.error(error.message);
     }
   };
 
@@ -41,20 +51,30 @@ const Admin = () => {
         .doc(userCredential.user.uid)
         .set({
           email: email,
+          password: password,
           // You can add more user data here if needed
         });
 
       // If sign-up is successful, navigate to "/select" page
-      alert("Signup Successfully");
-      navigate("/select");
+      toast.success("Signup Successful!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        onClose: () => navigate("/select"),
+      });
     } catch (error) {
       console.error("Error signing up:", error);
-      alert(error.message);
+      toast.error(error.message);
     }
   };
 
   return (
     <div>
+      <ToastContainer />
       <section className="py-10 bg-gray-50 sm:py-16 lg:py-24">
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto text-center">
