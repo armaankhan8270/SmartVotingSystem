@@ -6,7 +6,7 @@ import VoteOtp1 from "./Components/Verify";
 import HeroSection from "./Components/Home";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDa-VbWoYUmbQRmweM9nJJuc47zr4TGR_8",
+  apiKey: "add you api key and project configurations",
   authDomain: "voting-13ea9.firebaseapp.com",
   projectId: "voting-13ea9",
   storageBucket: "voting-13ea9.appspot.com",
